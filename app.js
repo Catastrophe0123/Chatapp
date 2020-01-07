@@ -3,19 +3,16 @@ const http = require("http").Server(app);
 const mongoose = require("mongoose");
 const io = require("socket.io")(http);
 var sentimentAnalysis = require("sentiment-analysis");
+const mongoURl = require("./config");
 
 const MongoClient = require("mongodb").MongoClient;
-const uri =
-   "mongodb+srv://newuser:newuser@cluster0-c1dqn.mongodb.net/test?retryWrites=true&w=majority";
+const uri = mongoURl.mongoURI;
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 let allSentiment = 0;
 
 mongoose
-   .connect(
-      "mongodb+srv://newuser:newuser@cluster0-c1dqn.mongodb.net/test?retryWrites=true&w=majority",
-      { dbName: "test" }
-   )
+   .connect(mongoURl.mongoURI, { dbName: "test" })
    .then(val => console.log("connected to mongo atlas"))
    .catch(err => console.log(err));
 
